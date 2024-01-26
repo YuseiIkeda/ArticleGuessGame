@@ -2,24 +2,29 @@ import React, { useEffect, useState } from "react";
 import { TextField, Button, Paper } from '@mui/material';
 
 export default function Main() {
+    // 適当に集めた単語だよ
+    const data = [
+        "富士山", "林真理子", "虹"
+    ];
+
     const [input, setInput] = useState("");
     const [wiki, setWiki] = useState([]);
     const [challengeCount, setChallengeCount] = useState(3);
     const [randomWord, setRandomWord] = useState("");
-
-    // 適当に集めた単語だよ
-    const data = [
-        "富士山", "林真理子", "虹", "北岳", "石鹸",
-        "屋根", "ことわざ", "土踏まず", "線分", "意味",
-        "琵琶湖", "五月病", "蛙化現象", "バナナ", "ハイドロプレーニング現象",
-        "奇跡", "貧乏揺すり", "マラソン", "相槌", "記事",
-        "抹茶", "クラゲ", "教授", "餃子", "公園"
-    ];
+    const [unusedWord, setUnusedWord] = useState([...data]);
 
     // 初回レンダリング時に記事を出力するよ
     useEffect(() => {
         getNewWord();
     }, []);
+
+    // 残りの単語の数が0になった時にゲームをリセットするよ
+    useEffect(() => {
+        if (unusedWord.length === 0) {
+            console.log("単語のリセット");
+            setUnusedWord([...data]);
+        }
+    }, [unusedWord]);
 
     // randomWordが変更されたら記事の内容が変わるよ
     useEffect(() => {
@@ -48,12 +53,16 @@ export default function Main() {
     const getNewWord = () => {
         const word = getRandomWord();
         setRandomWord(word);
+        console.log("答え:", word);
+        console.log("unusedWord.length:", unusedWord.length);
     };
 
     // ランダムな単語を取得する関数だよ
     const getRandomWord = () => {
-        const randomIndex = Math.floor(Math.random() * data.length);
-        return data[randomIndex];
+        const randomIndex = Math.floor(Math.random() * unusedWord.length);
+        const word = unusedWord[randomIndex];
+        setUnusedWord(prevWord => prevWord.filter(w => w !== word));
+        return word;
     };
 
     // 入力された文字列をinputに代入する関数だよ(直接書いた方が良い？)
