@@ -4,7 +4,16 @@ import { TextField, Button, Paper } from '@mui/material';
 export default function Main() {
     // 適当に集めた単語だよ
     const data = [
-        "富士山", "林真理子", "虹"
+        "富士山", "林真理子", "虹", "北岳", "石鹸",
+        "屋根", "ことわざ", "土踏まず", "線分", "意味",
+        "琵琶湖", "五月病", "蛙化現象", "バナナ", "ハイドロプレーニング現象",
+        "奇跡", "貧乏揺すり", "マラソン", "相槌", "金縛り",
+        "抹茶", "クラゲ", "爪", "餃子", "公園",
+        "ホームラン", "マシュマロ", "感情", "電池", "雲",
+        "画像", "誕生日", "夕方", "キャンプ", "ガラス",
+        "うま味", "夏至", "雷", "名前", "一輪車",
+        "あくび", "筋肉", "野球盤", "曜日", "淡水",
+        "定義", "評価", "商品", "権利", "状態"
     ];
 
     const [input, setInput] = useState("");
@@ -21,7 +30,6 @@ export default function Main() {
     // 残りの単語の数が0になった時にゲームをリセットするよ
     useEffect(() => {
         if (unusedWord.length === 0) {
-            console.log("単語のリセット");
             setUnusedWord([...data]);
         }
     }, [unusedWord]);
@@ -53,8 +61,8 @@ export default function Main() {
     const getNewWord = () => {
         const word = getRandomWord();
         setRandomWord(word);
-        console.log("答え:", word);
         console.log("unusedWord.length:", unusedWord.length);
+        console.log("答え:", word);
     };
 
     // ランダムな単語を取得する関数だよ
